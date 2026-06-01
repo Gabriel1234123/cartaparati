@@ -1,134 +1,255 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VERA | Netflix Analysis</title>
+    <title>Árbol de Amor Animado</title>
+    <meta name="author" content="Gabriel">
+    <meta name="copyright" content="Para Vera">
+    
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/style.mobile.css" media="only screen and (max-width: 600px)">
+    
+    <style>
+      .tree-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 400px;
+        z-index: 2;
+      }
+      
+      .animated-heart {
+        transform-origin: center;
+        animation: beat 1s infinite;
+      }
+      
+      @keyframes beat {
+        0%, 100% { transform: scale(1); }
+        20% { transform: scale(1.1); }
+        40% { transform: scale(0.95); }
+        60% { transform: scale(1.08); }
+        80% { transform: scale(1); }
+      }
 
-    <link rel="stylesheet" href="style.css">
+      /* ==================== CARTA ==================== */
+      .dedication-text {
+        position: relative;
+        top: 50%;
+        left: 3%;
+        transform: translateY(-50%);
+        width: 620px;
+        max-width: 95vw;
+        max-height: 65vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-        rel="stylesheet">
+        font-size: 1.5rem;
+        line-height: 1.7;
+        color: #050505;
+        font-family: 'Courier New', Courier, monospace;
+        white-space: pre-line;
+        z-index: 3;
+        
+        background: rgba(255,255,255,0.95);
+        border-radius: 16px;
+        padding: 2.2rem 2.5rem;
+        box-shadow: 0 10px 30px rgba(230, 0, 38, 0.15);
+        border: 1px solid rgba(230, 0, 38, 0.1);
+        
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+
+      .dedication-text.typing {
+        opacity: 1;
+      }
+
+      /* ==================== GATITO NEGRO PERMANENTE ==================== */
+      #greeting-cat {
+        position: fixed;
+        bottom: 12%;
+        right: 8%;
+        font-size: 82px;
+        z-index: 15;
+        filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.35));
+        cursor: pointer;
+        transition: all 2.8s cubic-bezier(0.34, 1.56, 0.64, 1); /* animación suave */
+      }
+
+      #greeting-cat.greet {
+        transform: translateX(-280px) scale(1.15); /* se acerca a la carta */
+      }
+
+      /* Animación de saludo (mueve la patita y cabeza) */
+      @keyframes catGreeting {
+        0%, 100% { transform: rotate(0deg); }
+        25%      { transform: rotate(-12deg); }
+        50%      { transform: rotate(12deg); }
+        75%      { transform: rotate(-8deg); }
+      }
+
+      #greeting-cat.greet span {
+        display: inline-block;
+        animation: catGreeting 1.2s infinite ease-in-out;
+      }
+
+      /* Corazones que salen cuando saluda */
+      .greeting-heart {
+        position: fixed;
+        font-size: 24px;
+        color: #e60026;
+        pointer-events: none;
+        animation: heartFloat 2.2s forwards;
+        z-index: 20;
+      }
+
+      @keyframes heartFloat {
+        0%   { transform: translateY(0) scale(0.6); opacity: 1; }
+        100% { transform: translateY(-120px) scale(1.4); opacity: 0; }
+      }
+
+      /* Responsivo */
+      @media (max-width: 700px) {
+        #greeting-cat {
+          font-size: 62px;
+          bottom: 10%;
+          right: 6%;
+        }
+        .dedication-text {
+          left: 50%;
+          transform: translateX(-50%) translateY(0);
+          top: 8%;
+          width: 95vw;
+          max-height: 55vh;
+          font-size: 1.15rem;
+          padding: 1.6rem;
+        }
+      }
+    </style>
 </head>
-
 <body>
+    <div id="floating-objects"></div>
+    <div class="dedication-text" id="dedication-text"></div>
+    <div class="countdown" id="countdown"></div>
+    <div class="tree-container" id="tree-container"></div>
+    <audio src="/Music/music1.mp3" id="bg-music" preload="auto"></audio>
 
-    <div id="loading-screen">
+    <!-- GATITO NEGRO QUE ESTÁ SIEMPRE VISIBLE -->
+    <div id="greeting-cat">🐈‍⬛</div>
 
-        <div class="loader-content">
+    <script src="Js/script.js"></script>
+    <script>
+      function getURLParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
 
-            <h1>ANALIZANDO DATOS...</h1>
+      function showDedicationText() {
+        let text = getURLParam('text') || `Hola Vera,
 
-            <div class="checks">
-                <p>✔ Honestidad detectada</p>
-                <p>✔ Espíritu aventurero detectado</p>
-                <p>✔ Respeto por espacios personales detectado</p>
-                <p>✔ Comunicación efectiva detectada</p>
-            </div>
+Si llegaste hasta aquí, primero tengo que admitir algo:
+claramente dediqué más tiempo del que una persona normal dedicaría a hacer esta página.
 
-            <p class="small">
-                Calculando compatibilidad con Vera...
-            </p>
+Pero mientras la hacía, me di cuenta de algo.
 
-        </div>
+No fue que coincidamos en todo.
+De hecho, hay cosas en las que pensamos diferente.
 
-    </div>
+Lo que me llamó la atención fue encontrar a alguien que valora cosas parecidas a las que yo considero importantes:
+la honestidad, la comunicación, el respeto por los espacios personales y la libertad de ser uno mismo.
 
-    <section class="hero">
+Hoy en día no es tan fácil encontrar personas así.
 
-        <div class="overlay">
+Todavía queda mucho por conocernos, muchas conversaciones pendientes y probablemente algunas diferencias por descubrir.
 
-            <div class="content">
+Pero lo que he visto hasta ahora me ha gustado bastante.
 
-                <h1 class="netflix">NETFLIX</h1>
+Así que este análisis no intenta demostrar nada.
 
-                <h2 class="title">VERA</h2>
+Solo quería que supieras que me alegra haberte conocido.
 
-                <p class="subtitle">
-                    Serie Original • Aventura • Honestidad • Comunicación
-                </p>
+Y que, sinceramente, me gustaría seguir descubriendo qué más hay detrás de Vera.
 
-                <div class="match">
-                    ⭐ 84% Match
-                </div>
+Gracias por tomarte el tiempo de leer esto.`;
 
-                <p class="description">
-                    Después de una investigación extremadamente rigurosa,
-                    el sistema detectó una persona aventurera, honesta,
-                    independiente y con una habilidad inesperada para
-                    hacer interesantes las conversaciones.
-                </p>
+        text = decodeURIComponent(text).replace(/\\n/g, '\n');
 
-                <button id="analyzeBtn">
-                    ▶ Ver Análisis Completo
-                </button>
+        const container = document.getElementById('dedication-text');
+        container.innerHTML = '';
+        container.classList.add('typing');
 
-            </div>
+        let i = 0;
+        function type() {
+          if (i <= text.length) {
+            container.textContent = text.slice(0, i);
+            container.scrollTop = container.scrollHeight;
+            i++;
+            const delay = (text[i - 2] === '\n') ? 320 : 38;
+            setTimeout(type, delay);
+          } else {
+            setTimeout(showSignature, 800);
+          }
+        }
+        type();
+      }
 
-        </div>
+      function showSignature() {
+        const container = document.getElementById('dedication-text');
+        let signature = document.createElement('div');
+        signature.className = 'signature';
+        signature.textContent = "— Dos puntos uve";
+        container.appendChild(signature);
+        
+        setTimeout(() => {
+          signature.classList.add('visible');
+          triggerCatGreeting();   // ← Aquí el gatito se acerca y saluda
+        }, 400);
+      }
 
-    </section>
+      // ==================== GATITO QUE SE ACERCA Y SALUDA ====================
+      function triggerCatGreeting() {
+        const cat = document.getElementById('greeting-cat');
+        
+        // 1. Se acerca a la carta
+        cat.classList.add('greet');
 
-    <div class="modal" id="modal">
+        // 2. Saluda moviendo la cabeza/patita
+        const catEmoji = document.createElement('span');
+        catEmoji.textContent = '🐈‍⬛';
+        cat.innerHTML = ''; 
+        cat.appendChild(catEmoji);
 
-        <div class="card">
+        // 3. Lanza corazones mientras saluda
+        let heartCount = 0;
+        const heartInterval = setInterval(() => {
+          if (heartCount >= 12) {
+            clearInterval(heartInterval);
+            return;
+          }
+          const heart = document.createElement('div');
+          heart.className = 'greeting-heart';
+          heart.textContent = '💕';
+          heart.style.left = `${cat.getBoundingClientRect().left + 30}px`;
+          heart.style.bottom = `${window.innerHeight * 0.25}px`;
+          document.body.appendChild(heart);
+          
+          setTimeout(() => heart.remove(), 2300);
+          heartCount++;
+        }, 160);
 
-            <h2>Resultado del análisis</h2>
+        console.log('%c🐈‍⬛ Gatito negro se acercó y te está saludando 💕', 'color:#e60026; font-weight:bold');
+      }
 
-            <div class="circle">
-                <span id="counter">0%</span>
-            </div>
-
-            <div class="stats">
-
-                <div class="stat">
-                    <span>Honestidad</span>
-                    <span>92%</span>
-                </div>
-
-                <div class="stat">
-                    <span>Comunicación</span>
-                    <span>95%</span>
-                </div>
-
-                <div class="stat">
-                    <span>Respeto de espacios</span>
-                    <span>98%</span>
-                </div>
-
-                <div class="stat">
-                    <span>Aventura</span>
-                    <span>88%</span>
-                </div>
-
-            </div>
-
-            <div class="result">
-
-                <h3>Conclusión</h3>
-
-                <p>
-                    Entre millones de personas,
-                    el sistema encontró algo curioso:
-                    coincidimos en varias de las cosas
-                    que realmente importan.
-                </p>
-
-            </div>
-
-            <button id="messageBtn">
-                Resultado Final
-            </button>
-
-            <div id="finalMessage"></div>
-
-        </div>
-
-    </div>
-
-    <script src="script.js"></script>
-
+      window.addEventListener('DOMContentLoaded', () => {
+        console.log('%c✅ Gatito negro permanente + se acerca y saluda al final', 'color:#e60026; font-weight:bold');
+        // Aquí pega el resto de tu código (fetch del SVG, pétalos, countdown, música...)
+      });
+    </script>
 </body>
-
 </html>
