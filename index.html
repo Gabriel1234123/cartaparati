@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERA | Netflix Analysis</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="loading-screen">
+
+        <div class="loader-content">
+
+            <h1>ANALIZANDO DATOS...</h1>
+
+            <div class="checks">
+                <p>✔ Honestidad detectada</p>
+                <p>✔ Espíritu aventurero detectado</p>
+                <p>✔ Respeto por espacios personales detectado</p>
+                <p>✔ Comunicación efectiva detectada</p>
+            </div>
+
+            <p class="small">
+                Calculando compatibilidad con Vera...
+            </p>
+
+        </div>
+
+    </div>
+
+    <section class="hero">
+
+        <div class="overlay">
+
+            <div class="content">
+
+                <h1 class="netflix">NETFLIX</h1>
+
+                <h2 class="title">VERA</h2>
+
+                <p class="subtitle">
+                    Serie Original • Aventura • Honestidad • Comunicación
+                </p>
+
+                <div class="match">
+                    ⭐ 84% Match
+                </div>
+
+                <p class="description">
+                    Después de una investigación extremadamente rigurosa,
+                    el sistema detectó una persona aventurera, honesta,
+                    independiente y con una habilidad inesperada para
+                    hacer interesantes las conversaciones.
+                </p>
+
+                <button id="analyzeBtn">
+                    ▶ Ver Análisis Completo
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="modal" id="modal">
+
+        <div class="card">
+
+            <h2>Resultado del análisis</h2>
+
+            <div class="circle">
+                <span id="counter">0%</span>
+            </div>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <span>Honestidad</span>
+                    <span>92%</span>
+                </div>
+
+                <div class="stat">
+                    <span>Comunicación</span>
+                    <span>95%</span>
+                </div>
+
+                <div class="stat">
+                    <span>Respeto de espacios</span>
+                    <span>98%</span>
+                </div>
+
+                <div class="stat">
+                    <span>Aventura</span>
+                    <span>88%</span>
+                </div>
+
+            </div>
+
+            <div class="result">
+
+                <h3>Conclusión</h3>
+
+                <p>
+                    Entre millones de personas,
+                    el sistema encontró algo curioso:
+                    coincidimos en varias de las cosas
+                    que realmente importan.
+                </p>
+
+            </div>
+
+            <button id="messageBtn">
+                Resultado Final
+            </button>
+
+            <div id="finalMessage"></div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
